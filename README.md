@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Content Calendar
 
 A modern, interactive content calendar application for managing content items, campaigns, and social media posts.
@@ -104,6 +103,260 @@ content-calendar/
 - Status
 - Campaign association
 
+## API Documentation
+
+### Base URL
+```
+http://localhost:3001/api
+```
+
+### Authentication
+Currently using local development mode. Authentication to be implemented.
+
+### Content Items
+
+#### Get All Content Items
+```
+GET /content-items
+```
+Response:
+```json
+[
+  {
+    "id": "uuid",
+    "title": "Blog Post",
+    "description": "Content description",
+    "date": "2024-03-20",
+    "status": "Planned",
+    "campaignId": "uuid",
+    "campaign": {
+      "id": "uuid",
+      "name": "Q1 Campaign"
+    }
+  }
+]
+```
+
+#### Create Content Item
+```
+POST /content-items
+```
+Request Body:
+```json
+{
+  "title": "New Blog Post",
+  "description": "Post description",
+  "date": "2024-03-20",
+  "status": "Backlog",
+  "campaignId": "optional-campaign-uuid"
+}
+```
+
+#### Update Content Item
+```
+PUT /content-items/:id
+```
+Request Body:
+```json
+{
+  "title": "Updated Title",
+  "description": "Updated description",
+  "status": "In Progress"
+}
+```
+
+#### Delete Content Item
+```
+DELETE /content-items/:id
+```
+
+### Campaigns
+
+#### Get All Campaigns
+```
+GET /campaigns
+```
+Response:
+```json
+[
+  {
+    "id": "uuid",
+    "name": "Q1 Marketing Campaign",
+    "description": "Campaign description",
+    "startDate": "2024-01-01",
+    "endDate": "2024-03-31",
+    "contentItems": [],
+    "socialPosts": []
+  }
+]
+```
+
+#### Create Campaign
+```
+POST /campaigns
+```
+Request Body:
+```json
+{
+  "name": "Q2 Campaign",
+  "description": "Campaign description",
+  "startDate": "2024-04-01",
+  "endDate": "2024-06-30"
+}
+```
+
+#### Update Campaign
+```
+PUT /campaigns/:id
+```
+Request Body:
+```json
+{
+  "name": "Updated Campaign Name",
+  "description": "Updated description",
+  "endDate": "2024-07-01"
+}
+```
+
+#### Delete Campaign
+```
+DELETE /campaigns/:id
+```
+
+### Social Posts
+
+#### Get All Social Posts
+```
+GET /social-posts
+```
+Response:
+```json
+[
+  {
+    "id": "uuid",
+    "content": "Post content",
+    "date": "2024-03-20",
+    "platforms": ["twitter", "linkedin"],
+    "status": "Planned",
+    "campaignId": "uuid",
+    "campaign": {
+      "id": "uuid",
+      "name": "Q1 Campaign"
+    }
+  }
+]
+```
+
+#### Create Social Post
+```
+POST /social-posts
+```
+Request Body:
+```json
+{
+  "content": "New social post content",
+  "date": "2024-03-20",
+  "platforms": ["twitter", "facebook"],
+  "status": "Planned",
+  "campaignId": "optional-campaign-uuid"
+}
+```
+
+#### Update Social Post
+```
+PUT /social-posts/:id
+```
+Request Body:
+```json
+{
+  "content": "Updated content",
+  "platforms": ["twitter", "linkedin", "instagram"],
+  "status": "In Progress"
+}
+```
+
+#### Delete Social Post
+```
+DELETE /social-posts/:id
+```
+
+### Error Responses
+
+#### 400 Bad Request
+```json
+{
+  "error": {
+    "message": "Invalid request parameters",
+    "details": {
+      "field": "Error description"
+    }
+  }
+}
+```
+
+#### 404 Not Found
+```json
+{
+  "error": {
+    "message": "Resource not found"
+  }
+}
+```
+
+#### 500 Server Error
+```json
+{
+  "error": {
+    "message": "Internal server error"
+  }
+}
+```
+
+### Data Models
+
+#### Content Item
+```typescript
+{
+  id: UUID;
+  title: string;
+  description?: string;
+  date: Date;
+  status: 'Backlog' | 'Planned' | 'In Progress' | 'Done';
+  campaignId?: UUID;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+#### Campaign
+```typescript
+{
+  id: UUID;
+  name: string;
+  description?: string;
+  startDate: Date;
+  endDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  contentItems?: ContentItem[];
+  socialPosts?: SocialPost[];
+}
+```
+
+#### Social Post
+```typescript
+{
+  id: UUID;
+  content: string;
+  date: Date;
+  platforms: string[];
+  status: 'Backlog' | 'Planned' | 'In Progress' | 'Done';
+  campaignId?: UUID;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
 ## Setup
 
 ### Prerequisites
@@ -152,7 +405,3 @@ npm start
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-=======
-# calendar
-Test calendar functionality 
->>>>>>> 47c73ab8a4ac6cde169a7b186627ccbe45888fde
