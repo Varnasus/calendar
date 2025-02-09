@@ -1,0 +1,681 @@
+.calendar {
+  width: 100%;
+  position: relative;
+  padding-top: 40px; /* Space for sticky header */
+  --z-modal-overlay: 9999;
+  --z-modal: 9000;
+  --z-dropdown: 8500;      /* Move dropdowns higher */
+  --z-add-dropdown: 8200;  /* Specific z-index for add-dropdown */
+  --z-date: 7500;         /* Move date higher to stay above cells */
+  --z-content-item: 7000;
+  --z-campaign: 5000;
+  --z-cell: 1000;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background-color: var(--border-color);
+  position: relative;
+  z-index: var(--z-cell);
+}
+
+.calendar-cell {
+  background-color: var(--cell-background);
+  min-height: 180px;
+  padding: 12px;
+  position: relative;
+  cursor: default;
+  user-select: none;
+  transition: all 0.2s ease;
+  z-index: var(--z-cell);
+}
+
+.calendar-cell:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.date {
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  color: var(--text-color);
+  position: relative;
+  z-index: var(--z-date);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+/* Plus icon styles */
+.date::after {
+  content: '\f067'; /* FontAwesome plus icon */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  opacity: 0;
+  color: white;
+  margin-left: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.date:hover::after {
+  opacity: 1;
+}
+
+.date:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.date-add {
+  opacity: 0;
+  color: var(--primary-color);
+  transition: opacity 0.2s ease;
+}
+
+.calendar-cell:hover .date-add {
+  opacity: 1;
+}
+
+.content-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  position: relative;
+  z-index: var(--z-content-item);
+  min-height: 120px;
+  padding: 4px;
+  cursor: default;
+  user-select: none;
+}
+
+/* Remove hover effect */
+.content-items:hover {
+  background-color: transparent;
+}
+
+/* Ensure items inside are still clickable */
+.content-items > .content-item,
+.content-items > .social-post,
+.content-items > .campaign {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Improve individual item hover states */
+.content-item:hover,
+.social-post:hover,
+.campaign:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px var(--hover-shadow-color);
+  opacity: 0.95;
+  z-index: calc(var(--z-content-item) + 1);
+}
+
+.content-item {
+  padding: 8px;
+  margin: 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9em;
+  background-color: var(--status-backlog-bg);
+  border-left: 3px solid var(--item-color, var(--primary-color));
+  color: var(--text-color);
+  z-index: var(--z-content-item);
+  position: relative;
+}
+
+.content-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px var(--hover-shadow-color);
+  opacity: 0.95;
+  z-index: calc(var(--z-content-item) + 1);
+}
+
+.content-item-title {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.content-item-description {
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.status-backlog { 
+  background-color: var(--status-backlog-bg);
+  border-left: 3px solid #6c757d;
+}
+
+.status-planned { 
+  background-color: var(--status-planned-bg);
+  border-left: 3px solid #0d6efd;
+}
+
+.status-in-progress { 
+  background-color: var(--status-in-progress-bg);
+  border-left: 3px solid #ffc107;
+}
+
+.status-done { 
+  background-color: var(--status-done-bg);
+  border-left: 3px solid #198754;
+}
+
+/* Campaign styles */
+.campaign {
+  position: relative;
+  margin: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: var(--z-campaign);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  opacity: 0.9;
+  box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.campaign:hover {
+  z-index: 4;
+  opacity: 1;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px var(--hover-shadow-color);
+}
+
+.campaign-start {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.campaign-middle {
+  border-radius: 0;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.campaign-end {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* Social post styles */
+.social-post {
+  padding: 8px;
+  margin: 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9em;
+  color: white;
+  z-index: var(--z-content-item);
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.social-post:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
+  z-index: calc(var(--z-content-item) + 1);
+}
+
+.social-icons {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+/* Add month header styling */
+.calendar h2 {
+  color: var(--text-color);
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  text-align: center;
+  user-select: none;
+}
+
+.add-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);  /* Give it some space from the button */
+  right: 0;
+  background-color: var(--modal-background);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  z-index: var(--z-add-dropdown);
+  min-width: 200px;
+  overflow: hidden;
+}
+
+.add-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95em;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-dropdown button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background-color: var(--hover-color);
+  opacity: 0.5;
+  transition: width 0.2s ease;
+  z-index: -1;
+}
+
+.add-dropdown button:hover {
+  padding-left: 24px;
+}
+
+.add-dropdown button:hover::after {
+  width: 100%;
+}
+
+.add-dropdown button i {
+  width: 20px;
+  text-align: center;
+  opacity: 0.8;
+  transition: transform 0.2s ease;
+}
+
+.add-dropdown button:hover i {
+  transform: scale(1.1);
+}
+
+.add-dropdown button:not(:last-child) {
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Selected date styles */
+.date.selected {
+  background-color: var(--primary-color);
+  color: white;
+  z-index: var(--z-add-dropdown);
+  position: relative;
+}
+
+/* Dark mode improvements */
+[data-theme='dark'] .calendar-cell:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .add-dropdown {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Weekday header styles */
+.weekday-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background-color: var(--border-color);
+  margin-bottom: 1px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  user-select: none;
+}
+
+.weekday-cell {
+  background-color: var(--cell-background);
+  padding: 8px;
+  text-align: center;
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+/* Weekend styles */
+.weekday-cell.weekend {
+  color: var(--text-color);
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* Hover effects */
+.weekday-cell:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.weekday-cell::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: all 0.2s ease;
+  transform: translateX(-50%);
+}
+
+.weekday-cell:hover::after {
+  width: 100%;
+}
+
+/* Dark mode improvements */
+[data-theme='dark'] .weekday-cell {
+  background-color: var(--modal-background);
+}
+
+[data-theme='dark'] .weekday-cell:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .weekday-cell.weekend {
+  color: var(--text-color);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Today's date styles */
+.date.today {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.date.today::after {
+  display: none;
+}
+
+/* Today's cell styles */
+.calendar-cell.today {
+  border: 2px solid var(--primary-color);
+  padding: 10px; /* Compensate for border to maintain alignment */
+}
+
+/* Weekend cell styles */
+.calendar-cell.weekend {
+  position: relative;
+}
+
+.calendar-cell.weekend::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+/* Past date styles */
+.calendar-cell.past {
+  position: relative;
+}
+
+.calendar-cell.past::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  pointer-events: none;
+}
+
+/* Dark mode variations */
+[data-theme='dark'] .calendar-cell.weekend::before {
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+}
+
+[data-theme='dark'] .calendar-cell.past::before {
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+}
+
+/* Ensure content stays above gradient */
+.calendar-cell > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Update other elements' z-indices */
+.modal-overlay {
+  z-index: var(--z-modal-overlay);
+}
+
+.modal {
+  z-index: var(--z-modal);
+}
+
+.add-dropdown,
+.settings-dropdown {
+  z-index: var(--z-dropdown);
+}
+
+.date {
+  z-index: var(--z-date);
+}
+
+.campaign {
+  z-index: var(--z-campaign);
+}
+
+.calendar-cell {
+  z-index: var(--z-cell);
+}
+
+/* Ensure content items container doesn't clip items */
+.content-items {
+  position: relative;
+  z-index: var(--z-content-item);
+}
+
+/* Update social post to match content item z-index */
+.social-post {
+  z-index: var(--z-content-item);
+  position: relative;
+}
+
+.social-post:hover {
+  z-index: calc(var(--z-content-item) + 1);
+}
+
+/* Ensure the header stays above calendar cells */
+.header {
+  position: relative;
+  z-index: var(--z-dropdown);
+  background-color: var(--background-color);
+}
+
+/* Update add button container to maintain proper stacking */
+.add-button-container {
+  position: relative;
+  z-index: var(--z-dropdown);
+}
+
+/* Filter styles */
+.calendar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  position: relative;
+  padding-bottom: 12px; /* Add padding to create hover space between button and dropdown */
+}
+
+.filter-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-button.active {
+  background-color: var(--hover-color);
+  border-color: var(--primary-color);
+}
+
+.filter-button i {
+  font-size: 0.8em;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.filter-button.active i {
+  transform: rotate(180deg);
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: calc(100% - 12px); /* Adjust for the padding we added */
+  left: 0;
+  background-color: var(--modal-background);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  min-width: 200px;
+  z-index: var(--z-dropdown);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* Show dropdown on both button hover and dropdown hover */
+.filter-group:hover .filter-dropdown,
+.filter-dropdown:hover,
+.filter-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Remove the previous hover rule that was hiding the dropdown */
+.filter-group:hover .filter-dropdown {
+  display: block; /* Change from 'none' to 'block' */
+}
+
+/* Add a hover area to prevent gaps */
+.filter-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -12px; /* Match the padding we added to filter-group */
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.filter-option:hover {
+  background-color: var(--hover-color);
+}
+
+/* Style for active filters */
+.filter-button.has-filters {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.filter-button.has-filters i {
+  opacity: 1;
+}
+
+.status-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  user-select: none;
+}
+
+.campaign-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.9em;
+  user-select: none;
+}
+
+/* Dark mode support */
+[data-theme='dark'] .filter-dropdown {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .filter-button {
+  border-color: var(--border-color);
+} 

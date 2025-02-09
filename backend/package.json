@@ -1,0 +1,25 @@
+{
+  "name": "content-calendar-backend",
+  "version": "1.0.0",
+  "description": "Backend for content calendar application",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "pg": "^8.7.1",
+    "sequelize": "^6.6.5",
+    "joi": "^17.4.2",
+    "helmet": "^4.6.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "jest": "^27.0.6"
+  }
+} 

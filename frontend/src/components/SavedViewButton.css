@@ -1,0 +1,45 @@
+.saved-view-button {
+  margin-left: auto;
+}
+
+.save-view-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-view-btn:hover {
+  background-color: var(--hover-color);
+}
+
+.save-view-form {
+  display: flex;
+  gap: 8px;
+}
+
+.save-view-form input {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  min-width: 200px;
+}
+
+.save-view-form button {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.save-view-form button[type="button"] {
+  background-color: var(--secondary-color);
+} 

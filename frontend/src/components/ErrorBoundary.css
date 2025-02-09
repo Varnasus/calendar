@@ -1,0 +1,71 @@
+.error-boundary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: var(--background-color);
+}
+
+.error-content {
+  text-align: center;
+  padding: 40px;
+  background-color: var(--modal-background);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+}
+
+.error-content i {
+  font-size: 48px;
+  color: #dc3545;
+  margin-bottom: 20px;
+}
+
+.error-content h2 {
+  margin: 0 0 16px;
+  color: var(--text-color);
+}
+
+.error-content p {
+  margin: 0 0 24px;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.error-content button {
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.error-content button:hover {
+  background-color: var(--hover-color);
+}
+
+.error-content details {
+  margin-top: 24px;
+  text-align: left;
+  color: var(--text-color);
+}
+
+.error-content summary {
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.error-content pre {
+  background-color: var(--input-background);
+  padding: 12px;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.9em;
+  margin: 8px 0;
+} 

@@ -1,0 +1,125 @@
+/* Base styles */
+:root {
+  /* Light theme (default) */
+  --primary-color: #1a75ff;
+  --secondary-color: #f0f2f5;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #e1e4e8;
+  --hover-color: #0056b3;
+  --cell-background: #ffffff;
+  --grid-border: #ddd;
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+  --modal-background: #ffffff;
+  --input-background: #ffffff;
+  --input-border: #ddd;
+  
+  /* Status colors for light mode */
+  --status-backlog-bg: #f8f9fa;
+  --status-planned-bg: #e6f0ff;
+  --status-in-progress-bg: #fff8e6;
+  --status-done-bg: #e6fff0;
+  
+  /* Shadow colors */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --hover-shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='dark'] {
+  --primary-color: #2d8cff;
+  --secondary-color: #2d3436;
+  --background-color: #1a1a1a;
+  --text-color: #ffffff;
+  --border-color: #404040;
+  --hover-color: #3d99ff;
+  --cell-background: #2d2d2d;
+  --grid-border: #404040;
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+  --modal-background: #2d2d2d;
+  --input-background: #3d3d3d;
+  --input-border: #505050;
+  
+  /* Status colors for dark mode */
+  --status-backlog-bg: rgba(108, 117, 125, 0.15);
+  --status-planned-bg: rgba(13, 110, 253, 0.15);
+  --status-in-progress-bg: rgba(255, 193, 7, 0.15);
+  --status-done-bg: rgba(25, 135, 84, 0.15);
+  
+  /* Shadow colors */
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --hover-shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, 
+              color 0.3s ease, 
+              border-color 0.3s ease, 
+              box-shadow 0.3s ease;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Common elements */
+button {
+  cursor: pointer;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+input, select, textarea {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--secondary-color);
+}
+
+/* Utility classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
