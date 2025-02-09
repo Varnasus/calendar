@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Content Calendar
 
 A modern, interactive content calendar application for managing content items, campaigns, and social media posts.
@@ -151,3 +152,7 @@ npm start
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+=======
+# calendar
+Test calendar functionality 
+>>>>>>> 47c73ab8a4ac6cde169a7b186627ccbe45888fde
